@@ -11,6 +11,6 @@ export class AuthService {
   private http = inject(HttpClient);
 
   public login(data: login): Observable<loginResponse> {
-    return this.http.post<loginResponse>("http://localhost:8080/auth/login", data);
+    return this.http.post<loginResponse>("/auth/login", data);
   }
 }

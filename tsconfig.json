@@ -19,6 +19,7 @@
       "@interfaces/*": ["./src/app/interfaces/*"],
       "@services/*": ["./src/app/services/*"],
       "@environments/*": ["./src/environments/*"],
+      "@interceptors/*": ["./src/app/interceptors/*"],
     }
   },
   "angularCompilerOptions": {
