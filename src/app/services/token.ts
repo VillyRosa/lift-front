@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 @Injectable({
   providedIn: 'root'
 })
-export class TokenService {
+export class Token {
   private static TOKEN_KEY = "token";
 
   public static getToken(): string | null {

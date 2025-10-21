@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class Auth {
   private http = inject(HttpClient);
 
   public login(data: login): Observable<loginResponse> {

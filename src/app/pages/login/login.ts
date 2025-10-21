@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '@services/auth.service';
+import { Auth } from '@services/auth';
 import { Router, RouterLink } from "@angular/router";
-import { TokenService } from '@services/token.service';
+import { Token } from '@services/token';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -17,7 +17,7 @@ export class Login {
     password: new FormControl('', [Validators.required])
   });
 
-  private authService = inject(AuthService);
+  private authService = inject(Auth);
   private router = inject(Router);
   private messageService = inject(MessageService);
 
@@ -52,7 +52,7 @@ export class Login {
 
     this.authService.login({ email: data.email!, password: data.password! }).subscribe({
       next: (response) => {
-        TokenService.setToken(response.token);
+        Token.setToken(response.token);
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successfully logged in' });
         this.router.navigate(['/']);
       },

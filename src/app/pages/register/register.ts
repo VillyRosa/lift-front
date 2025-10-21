@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { register } from '@interfaces/register';
-import { AuthService } from '@services/auth.service';
+import { Auth } from '@services/auth';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -21,7 +21,7 @@ export class Register {
     confirmPassword: new FormControl('', [Validators.required])
   });
 
-  private authService = inject(AuthService);
+  private authService = inject(Auth);
   private messageService = inject(MessageService);
   private router = inject(Router);
 
