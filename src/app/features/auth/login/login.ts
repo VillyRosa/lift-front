@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Auth } from '@services/auth';
 import { Router, RouterLink } from "@angular/router";
-import { Token } from '@services/token';
+import { Auth } from '@core/auth/services/auth';
+import { Token } from '@core/auth/services/token';
 import { MessageService } from 'primeng/api';
 
 @Component({

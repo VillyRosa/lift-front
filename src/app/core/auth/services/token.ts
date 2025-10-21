@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { decodedToken } from '@interfaces/decoded-token';
+import { iDecodedToken } from '@core/auth/interfaces/decoded-token';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
@@ -24,12 +24,12 @@ export class Token {
     return !!localStorage.getItem(this.TOKEN_KEY);
   }
 
-  public static decodeToken(): decodedToken | null {
+  public static decodeToken(): iDecodedToken | null {
     const token = this.getToken();
     if (!token) return null;
 
     try {
-      return jwtDecode<decodedToken>(token);
+      return jwtDecode<iDecodedToken>(token);
     } catch (error) {
       console.error('Error decoding token:', error);
       return null;

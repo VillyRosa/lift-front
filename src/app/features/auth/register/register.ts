@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { register } from '@interfaces/register';
-import { Auth } from '@services/auth';
+import { Auth } from '@core/auth/services/auth';
+import { iRegister } from '@core/auth/interfaces/register';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -102,12 +102,12 @@ export class Register {
       return;
     }
 
-    const data = this.registerForm.value as register;
+    const data = this.registerForm.value as iRegister;
 
     this.authService.register(data).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Successfully registered' });
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/auth/login"]);
       },
       error: (error) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Internal error, please try again later' });

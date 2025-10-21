@@ -1,4 +1,4 @@
-export interface register {
+export interface iRegister {
   nickname: string;
   firstName: string;
   lastName: string;

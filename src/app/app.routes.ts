@@ -1,18 +1,15 @@
 import { Routes } from '@angular/router';
-import { Login } from '@pages/login/login';
-import { Register } from '@pages/register/register';
-import { authGuard } from './guards/auth-guard';
-import { Overview } from '@pages/overview/overview';
+import { authGuard } from '@core/auth/guards/auth-guard';
+import authRoutes from '@features/auth/auth.routes';
+import overvirewRoutes from '@features/overview/overview.routes';
 
 export const routes: Routes = [
   {
     path: '',
     canActivate: [authGuard],
     children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'overview', component: Overview },
+      ...overvirewRoutes
     ]
   },
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
+  ...authRoutes
 ];

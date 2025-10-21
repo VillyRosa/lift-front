@@ -6,16 +6,15 @@ import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { apiPrefixInterceptor } from '@interceptors/api-prefix-interceptor';
+import { apiPrefixInterceptor } from '@core/interceptors/api-prefix-interceptor';
+import { authTokenInterceptor } from '@core/auth/interceptors/auth-token-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(
-      withInterceptors([apiPrefixInterceptor])
-    ),
+    provideHttpClient(withInterceptors([apiPrefixInterceptor, authTokenInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {

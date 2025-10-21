@@ -15,11 +15,9 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "@pages/*": ["./src/app/pages/*"],
-      "@interfaces/*": ["./src/app/interfaces/*"],
-      "@services/*": ["./src/app/services/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@features/*": ["./src/app/features/*"],
       "@environments/*": ["./src/environments/*"],
-      "@interceptors/*": ["./src/app/interceptors/*"],
     }
   },
   "angularCompilerOptions": {
