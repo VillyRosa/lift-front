@@ -11,5 +11,6 @@ export class SidebarLink {
 
   @Input() label: string = '';
   @Input() routerLink: string = '';
+  @Input() icon: string = '';
 
 }
