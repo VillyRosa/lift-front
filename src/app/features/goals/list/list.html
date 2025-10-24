@@ -1,0 +1,89 @@
+<div class="card">
+    <p-table
+        #dt
+        [value]="goals"
+        [(selection)]="selectedGoals"
+        dataKey="id"
+        [rowHover]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10, 25, 50]"
+        [loading]="loading"
+        [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [totalRecords]="totalGoals"
+        [globalFilterFields]="['weight', 'deadline', 'achieved', 'createdAt']"
+        [lazy]="true"
+        (onLazyLoad)="fetchGoals($event)"
+    >
+        <ng-template #caption>
+            <div class="flex justify-between">
+                <div class="flex gap-2">
+                    <p-button [outlined]="true" icon="pi pi-filter-slash" label="Clear" (click)="clear(dt)" />
+                </div>
+                <p-button label="New" icon="pi pi-plus" class="mr-2" />
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox />
+                </th>
+                <th pSortableColumn="weight" style="min-width: 14rem">
+                    <div class="flex justify-between items-center gap-2">
+                        Weight
+                        <p-sortIcon field="weight" />
+                    </div>
+                </th>
+                <th pSortableColumn="deadline" style="min-width: 14rem">
+                    <div class="flex justify-between items-center gap-2">
+                        Deadline
+                        <p-sortIcon field="deadline" />
+                    </div>
+                </th>
+                <th pSortableColumn="achieved" style="min-width: 14rem">
+                    <div class="flex justify-between items-center gap-2">
+                        Completed
+                        <p-sortIcon field="achieved" />
+                    </div>
+                </th>
+                <th pSortableColumn="createdAt" style="min-width: 14rem">
+                    <div class="flex justify-between items-center gap-2">
+                        Created At
+                        <p-sortIcon field="createdAt" />
+                    </div>
+                </th>
+                <th style="width: 5rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-goal>
+            <tr class="p-selectable-row">
+                <td>
+                    <p-tableCheckbox [value]="goal" />
+                </td>
+                <td>
+                    {{ goal.weight }}
+                </td>
+                <td>
+                    {{ goal.deadline | date: 'MM/dd/yyyy' }}
+                </td>
+                <td>
+                    <p-tag [value]="goal.achieved ? 'Completed' : 'Not yet'" [severity]="goal.achieved ? 'success' : 'info'" />
+                </td>
+                <td>
+                    {{ goal.createdAt | date: 'MM/dd/yyyy HH:mm:ss' }}
+                </td>
+                <td style="text-align: center">
+                    <a routerLink="/goals/{{ goal.id }}/edit">
+                        <p-button icon="pi pi-search" rounded="" />
+                    </a>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="8">No goals found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
