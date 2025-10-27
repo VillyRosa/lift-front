@@ -39,11 +39,11 @@ export class Goals {
     return this.http.post<iGoal>("/goals", data);
   }
 
-  public updateById(id: number, data: iNewGoal): Observable<iGoal> {
+  public updateById(id: string, data: iNewGoal): Observable<iGoal> {
     return this.http.put<iGoal>("/goals/" + id, data);
   }
 
-  public deleteById(id: number): Observable<iPaginatedResponse<iGoal>> {
+  public deleteById(id: string): Observable<iPaginatedResponse<iGoal>> {
     return this.http.delete<iPaginatedResponse<iGoal>>("/goals/" + id);
   }
 
