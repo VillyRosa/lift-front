@@ -20,6 +20,7 @@
             <div class="flex justify-between">
                 <div class="flex gap-2">
                     <p-button [outlined]="true" icon="pi pi-filter-slash" label="Clear" (click)="clear(dt)" />
+                    <p-button severity="danger" icon="pi pi-trash" label="Delete" outlined (onClick)="deleteSelectedGoals()" [disabled]="!selectedGoals || !selectedGoals.length"  />
                 </div>
                 <p-button label="New" icon="pi pi-plus" class="mr-2" />
             </div>

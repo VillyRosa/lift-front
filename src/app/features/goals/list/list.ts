@@ -11,6 +11,8 @@ import { iGoal } from '../interface/goal';
 import { Goals } from '../services/goals';
 import { iPageableRequest } from '@shared/interfaces/pageable-request';
 import { RouterLink } from "@angular/router";
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-list',
@@ -20,12 +22,14 @@ import { RouterLink } from "@angular/router";
 })
 export class List implements OnInit {
   public goals: iGoal[] = [];
-  public selectedGoals = [];
+  public selectedGoals: iGoal[] = [];
   public loading: boolean = false;
   public totalGoals: number = 0;
   public page: number = 0;
 
   private goalService = inject(Goals);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
 
   public ngOnInit(): void {
     this.fetchGoals();
@@ -33,15 +37,12 @@ export class List implements OnInit {
 
   public fetchGoals(ev: any | null = null): void {
     const filters: iPageableRequest = {
-      page: ev != null ? (ev.first / ev.rows) : 0
+      page: ev != null ? (ev.first / ev.rows) : 0,
+      size: ev != null ? ev.rows : 10
     };
 
     if (ev !== null && ev.sortField) {
       filters.sort = ev.sortField + ',' + (ev.sortOrder === 1 ? 'asc' : 'desc');
-    }
-
-    if (ev !== null && ev.rows) {
-      filters.size = ev != null ? ev.rows : 10;
     }
 
     this.loading = true;
@@ -56,6 +57,36 @@ export class List implements OnInit {
 
   public clear(table: Table): void {
     table.clear();
+  }
+
+  public deleteSelectedGoals(): void {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete the selected goals?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+        label: 'No',
+        severity: 'secondary',
+        variant: 'text'
+      },
+      acceptButtonProps: {
+        severity: 'danger',
+        label: 'Yes'
+      },
+      accept: () => {
+        const reqs = this.selectedGoals.map(goal => this.goalService.deleteById(goal.id));
+        this.loading = true;
+
+        forkJoin(reqs).subscribe({
+          next: () => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Goals deleted successfully' });
+            this.fetchGoals();
+            this.selectedGoals = [];
+          },
+          complete: () => this.loading = false
+        });
+      }
+    });
   }
 
 }
